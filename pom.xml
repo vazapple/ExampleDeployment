@@ -1,0 +1,192 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.opengamma</groupId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>OpenGamma Example Deployment</name>
+  <artifactId>exampledeployment</artifactId>
+
+  <properties>
+    <og.version>1.2.0-SNAPSHOT</og.version>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>og-nexus-public</id>
+      <name>OpenGamma Nexus Public</name>
+      <url>http://maven.opengamma.com/nexus/content/groups/public</url>
+    </repository>
+  </repositories>
+
+  <build>
+    <plugins>
+      <!-- Dev environment -->
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.5.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>com.opengamma</groupId>
+                  <artifactId>og-web</artifactId>
+                  <version>${og.version}</version>
+                  <type>zip</type>
+                  <classifier>web-engine</classifier>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>web-engine</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>data/hsqldb</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>          
+                <resource>
+                  <directory>template/hsqldb</directory>
+                </resource>
+              </resources>              
+            </configuration>            
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Deployment bundle -->
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <descriptors>
+            <descriptor>assembly.xml</descriptor>
+          </descriptors>
+          <formats>
+            <format>zip</format>
+          </formats>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <versionRange>[2.0,)</versionRange>
+                    <goals>
+                      <goal>copy-dependencies</goal>
+                      <goal>unpack</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <dependencies>
+    <!-- OpenGamma Server components -->
+    <dependency>
+      <groupId>com.opengamma</groupId>
+      <artifactId>og-server</artifactId>
+      <version>${og.version}</version>
+      <type>pom</type>
+    </dependency>
+    
+    <!-- JMS -->
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-pool</artifactId>
+      <version>5.3.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-beans</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    
+    <!-- Databases -->
+    <dependency>
+      <groupId>postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>9.1-901-1.jdbc4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>2.2.9</version>
+    </dependency>
+    
+    <!-- Resources for unpacking -->
+    <dependency>
+      <groupId>com.opengamma</groupId>
+      <artifactId>og-masterdb</artifactId>
+      <version>${og.version}</version>
+      <type>zip</type>
+      <classifier>sql</classifier>
+    </dependency>
+    <dependency>
+      <groupId>com.opengamma</groupId>
+      <artifactId>og-web</artifactId>
+      <version>${og.version}</version>
+      <type>zip</type>
+      <classifier>web-engine</classifier>
+    </dependency>
+    <dependency>
+      <groupId>com.opengamma</groupId>
+      <artifactId>og-server</artifactId>
+      <version>${og.version}</version>
+      <type>zip</type>
+      <classifier>scripts-tools</classifier>
+    </dependency>
+  </dependencies>
+
+</project>
