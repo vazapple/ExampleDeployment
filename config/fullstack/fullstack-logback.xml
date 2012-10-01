@@ -3,9 +3,9 @@
   <jmxConfigurator />
 
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>fullstack.log</file>
+    <file>logs/fullstack.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-      <fileNamePattern>fullstack.%i.log.zip</fileNamePattern>
+      <fileNamePattern>logs/fullstack.%i.log.zip</fileNamePattern>
       <minIndex>1</minIndex>
       <maxIndex>9</maxIndex>
     </rollingPolicy>

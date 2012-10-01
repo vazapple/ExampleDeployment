@@ -20,6 +20,16 @@
 
   <build>
     <plugins>
+      <!-- Target Java 6 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.1</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
       <!-- Dev environment -->
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -63,6 +73,22 @@
                 </resource>
               </resources>              
             </configuration>            
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+                <mkdir dir="logs"/>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
@@ -166,6 +192,13 @@
     </dependency>
     
     <!-- Resources for unpacking -->
+    <dependency>
+      <groupId>com.opengamma</groupId>
+      <artifactId>og-server</artifactId>
+      <version>${og.version}</version>
+      <type>zip</type>
+      <classifier>scripts-templates</classifier>
+    </dependency>
     <dependency>
       <groupId>com.opengamma</groupId>
       <artifactId>og-masterdb</artifactId>

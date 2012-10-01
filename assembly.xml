@@ -34,6 +34,20 @@
       <directoryMode>755</directoryMode>
       <fileMode>644</fileMode>
     </dependencySet>
+    <dependencySet>
+      <outputDirectory>/scripts</outputDirectory>
+      <includes>
+        <include>com.opengamma:og-server:zip:scripts-templates</include>
+      </includes>
+      <unpack>true</unpack>
+      <directoryMode>755</directoryMode>
+      <fileMode>755</fileMode>
+      <unpackOptions>
+        <includes>
+          <include>*.sh</include>
+        </includes>
+      </unpackOptions>
+    </dependencySet>
   </dependencySets>
   <fileSets>
     <fileSet>
@@ -56,6 +70,28 @@
       <directoryMode>755</directoryMode>
       <fileMode>755</fileMode>
       <lineEnding>unix</lineEnding>
+      <excludes>
+        <exclude>project-utils.sh</exclude>
+      </excludes>
+    </fileSet>
+    <fileSet>
+      <directory>scripts</directory>
+      <outputDirectory>/scripts</outputDirectory>
+      <directoryMode>755</directoryMode>
+      <fileMode>755</fileMode>
+      <lineEnding>unix</lineEnding>
+      <filtered>true</filtered>
+      <includes>
+        <include>project-utils.sh</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>logs</directory>
+      <outputDirectory>/logs</outputDirectory>
+      <directoryMode>0755</directoryMode>
+      <excludes>
+        <exclude>*</exclude>
+      </excludes>
     </fileSet>
   </fileSets>
 </assembly>
