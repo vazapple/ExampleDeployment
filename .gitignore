@@ -1,5 +1,6 @@
 .settings/
 target/
 data/
+logs/
 web-engine/
 *.log
