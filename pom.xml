@@ -56,27 +56,6 @@
         </executions>
       </plugin>
       <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>data/hsqldb</outputDirectory>
-              <overwrite>true</overwrite>
-              <resources>          
-                <resource>
-                  <directory>template/hsqldb</directory>
-                </resource>
-              </resources>              
-            </configuration>            
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
           <execution>
@@ -89,6 +68,38 @@
             <goals>
               <goal>run</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.opengamma</groupId>
+        <artifactId>og-maven-plugin</artifactId>
+        <version>${og.version}</version>
+        <executions>
+          <execution>
+            <id>hsqldb-create</id>
+            <phase>package</phase>
+            <goals>
+              <goal>hsqldb-create</goal>
+            </goals>
+		        <configuration>
+		          <dbPath>${basedir}/data/hsqldb/og-fin-user</dbPath>
+		          <username>OpenGamma</username>
+		          <password>OpenGamma</password>
+		          <scriptsArtifact>com.opengamma:og-masterdb:zip:sql</scriptsArtifact>
+		          <scriptsPath>db</scriptsPath>
+		        </configuration>
+          </execution>
+          <execution>
+            <id>scripts-tools</id>
+            <phase>package</phase>
+            <goals>
+              <goal>scripts-tools</goal>
+            </goals>
+            <configuration>
+		      <resourceArtifact>com.opengamma:og-server:zip:scripts-templates</resourceArtifact>
+		      <template>script-template.ftl</template>
+		    </configuration>
           </execution>
         </executions>
       </plugin>
@@ -114,6 +125,7 @@
         </executions>
       </plugin>
     </plugins>
+    
     <pluginManagement>
       <plugins>
         <plugin>
