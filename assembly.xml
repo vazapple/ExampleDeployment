@@ -17,18 +17,18 @@
       <fileMode>644</fileMode>
     </dependencySet>
     <dependencySet>
-      <outputDirectory>/scripts</outputDirectory>
+      <outputDirectory>/web-sharedmasters</outputDirectory>
       <includes>
-        <include>com.opengamma:og-server:zip:scripts-tools</include>
+        <include>com.opengamma:og-web:zip:web-sharedmasters</include>
       </includes>
       <unpack>true</unpack>
       <directoryMode>755</directoryMode>
-      <fileMode>755</fileMode>
+      <fileMode>644</fileMode>
     </dependencySet>
     <dependencySet>
-      <outputDirectory>/install</outputDirectory>
+      <outputDirectory>/web-marketdata</outputDirectory>
       <includes>
-        <include>com.opengamma:og-masterdb:zip:sql</include>
+        <include>com.opengamma:og-web:zip:web-marketdata</include>
       </includes>
       <unpack>true</unpack>
       <directoryMode>755</directoryMode>
@@ -58,8 +58,8 @@
       <lineEnding>unix</lineEnding>
     </fileSet>
     <fileSet>
-      <directory>template/hsqldb</directory>
-      <outputDirectory>/data/hsqldb</outputDirectory>
+      <directory>data</directory>
+      <outputDirectory>/data</outputDirectory>
       <directoryMode>755</directoryMode>
       <fileMode>644</fileMode>
       <lineEnding>unix</lineEnding>
@@ -84,6 +84,13 @@
       <includes>
         <include>project-utils.sh</include>
       </includes>
+    </fileSet>
+    <fileSet>
+      <directory>target/scripts-tools</directory>
+      <outputDirectory>/scripts</outputDirectory>
+      <directoryMode>755</directoryMode>
+      <fileMode>755</fileMode>
+      <lineEnding>unix</lineEnding>
     </fileSet>
     <fileSet>
       <directory>logs</directory>

@@ -7,7 +7,8 @@
   <artifactId>exampledeployment</artifactId>
 
   <properties>
-    <og.version>1.2.0-SNAPSHOT</og.version>
+    <og.version>1.2.1</og.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>        
   </properties>
 
   <repositories>
@@ -17,17 +18,24 @@
       <url>http://maven.opengamma.com/nexus/content/groups/public</url>
     </repository>
   </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>og-nexus-public</id>
+      <name>OG Nexus Public</name>
+      <url>http://maven.opengamma.com/nexus/content/groups/public</url>
+    </pluginRepository>
+  </pluginRepositories>
 
   <build>
     <plugins>
-      <!-- Target Java 6 -->
+      <!-- Target Java 7 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3.1</version>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.7</source>
+          <target>1.7</target>
         </configuration>
       </plugin>
       <!-- Dev environment -->
@@ -48,26 +56,26 @@
                   <version>${og.version}</version>
                   <type>zip</type>
                   <classifier>web-engine</classifier>
+                  <outputDirectory>web-engine</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>com.opengamma</groupId>
+                  <artifactId>og-web</artifactId>
+                  <version>${og.version}</version>
+                  <type>zip</type>
+                  <classifier>web-sharedmasters</classifier>
+                  <outputDirectory>web-sharedmasters</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>com.opengamma</groupId>
+                  <artifactId>og-web</artifactId>
+                  <version>${og.version}</version>
+                  <type>zip</type>
+                  <classifier>web-marketdata</classifier>
+                  <outputDirectory>web-marketdata</outputDirectory>
                 </artifactItem>
               </artifactItems>
-              <outputDirectory>web-engine</outputDirectory>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <configuration>
-              <tasks>
-                <mkdir dir="logs"/>
-              </tasks>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
           </execution>
         </executions>
       </plugin>
@@ -97,9 +105,25 @@
               <goal>scripts-tools</goal>
             </goals>
             <configuration>
-		      <resourceArtifact>com.opengamma:og-server:zip:scripts-templates</resourceArtifact>
-		      <template>script-template.ftl</template>
-		    </configuration>
+		          <resourceArtifact>com.opengamma:og-server:zip:scripts-templates</resourceArtifact>
+		          <template>script-template.ftl</template>
+		        </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+                <mkdir dir="logs"/>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
@@ -111,8 +135,11 @@
           <descriptors>
             <descriptor>assembly.xml</descriptor>
           </descriptors>
+          <finalName>${project.artifactId}-${project.version}-${maven.build.timestamp}</finalName>
+          <tarLongFileMode>gnu</tarLongFileMode>
           <formats>
             <format>zip</format>
+            <format>tar.bz2</format>
           </formats>
         </configuration>
         <executions>
@@ -224,6 +251,20 @@
       <version>${og.version}</version>
       <type>zip</type>
       <classifier>web-engine</classifier>
+    </dependency>
+    <dependency>
+      <groupId>com.opengamma</groupId>
+      <artifactId>og-web</artifactId>
+      <version>${og.version}</version>
+      <type>zip</type>
+      <classifier>web-sharedmasters</classifier>
+    </dependency>
+    <dependency>
+      <groupId>com.opengamma</groupId>
+      <artifactId>og-web</artifactId>
+      <version>${og.version}</version>
+      <type>zip</type>
+      <classifier>web-marketdata</classifier>
     </dependency>
     <dependency>
       <groupId>com.opengamma</groupId>

@@ -3,4 +3,6 @@ target/
 data/
 logs/
 web-engine/
+web-sharedmasters/
+web-marketdata/
 *.log
