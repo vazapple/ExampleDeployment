@@ -9,6 +9,9 @@
   <properties>
     <og.version>1.2.1</og.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>        
+    <joda.beans.indent>2</joda.beans.indent>
+    <joda.beans.prefix>_</joda.beans.prefix>
+    <joda.beans.stopOnError>false</joda.beans.stopOnError>
   </properties>
 
   <repositories>
@@ -150,6 +153,32 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.joda</groupId>
+        <artifactId>maven-joda-beans-plugin</artifactId>
+        <version>0.7</version>
+        <executions>
+          <execution>
+            <id>joda-beans-validate</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>validate</goal>
+            </goals>
+            <configuration>
+              <indent>${joda.beans.indent}</indent>
+              <prefix>${joda.beans.prefix}</prefix>
+              <stopOnError>${joda.beans.stopOnError}</stopOnError>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.joda</groupId>
+            <artifactId>joda-beans</artifactId>
+            <version>0.7</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
     
