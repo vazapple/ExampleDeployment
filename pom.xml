@@ -93,13 +93,13 @@
             <goals>
               <goal>hsqldb-create</goal>
             </goals>
-		        <configuration>
-		          <dbPath>${basedir}/data/hsqldb/og-fin-user</dbPath>
-		          <username>OpenGamma</username>
-		          <password>OpenGamma</password>
-		          <scriptsArtifact>com.opengamma:og-masterdb:zip:sql</scriptsArtifact>
-		          <scriptsPath>db</scriptsPath>
-		        </configuration>
+            <configuration>
+              <dbPath>${basedir}/data/hsqldb/og-fin-user</dbPath>
+              <username>OpenGamma</username>
+              <password>OpenGamma</password>
+              <scriptsArtifact>com.opengamma:og-masterdb:zip:sql</scriptsArtifact>
+              <scriptsPath>db</scriptsPath>
+            </configuration>
           </execution>
           <execution>
             <id>scripts-tools</id>
@@ -108,9 +108,9 @@
               <goal>scripts-tools</goal>
             </goals>
             <configuration>
-		          <resourceArtifact>com.opengamma:og-server:zip:scripts-templates</resourceArtifact>
-		          <template>script-template.ftl</template>
-		        </configuration>
+              <resourceArtifact>com.opengamma:og-server:zip:scripts-templates</resourceArtifact>
+              <template>script-template.ftl</template>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -199,6 +199,19 @@
                     <goals>
                       <goal>copy-dependencies</goal>
                       <goal>unpack</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.joda</groupId>
+                    <artifactId>maven-joda-beans-plugin</artifactId>
+                    <versionRange>0.7</versionRange>
+                    <goals>
+                      <goal>validate</goal>
                     </goals>
                   </pluginExecutionFilter>
                   <action>
